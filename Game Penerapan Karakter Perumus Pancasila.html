@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Penerapan Karakter Perumusan Pancasila - Game Memancing</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(180deg, #e0f2fe 0%, #bae6fd 100%);
+      min-height: 100vh;
+    }
+
+    @keyframes castRod {
+      0% { transform: rotate(-10deg); }
+      50% { transform: rotate(16deg); }
+      100% { transform: rotate(4deg); }
+    }
+
+    @keyframes pullRod {
+      0% { transform: rotate(4deg); }
+      50% { transform: rotate(-18deg) translateX(-4px); }
+      100% { transform: rotate(-12deg) translateX(-2px); }
+    }
+
+    @keyframes bobberBite {
+      0%, 100% { transform: translateY(0px) scale(1); }
+      25% { transform: translateY(6px) scale(1.15); }
+      50% { transform: translateY(-4px) scale(1); }
+      75% { transform: translateY(7px) scale(1.2); }
+    }
+
+    .rod-cast {
+      transform-origin: 58px 110px;
+      animation: castRod 0.45s ease-out forwards;
+    }
+
+    .rod-pull {
+      transform-origin: 58px 110px;
+      animation: pullRod 0.45s ease-out forwards;
+    }
+
+    .bobber-bite {
+      animation: bobberBite 0.45s ease-in-out infinite;
+    }
+
+    @keyframes swayPlant {
+      0%, 100% { transform: rotate(-4deg); }
+      50% { transform: rotate(5deg); }
+    }
+
+    @keyframes floatBubble {
+      0% { transform: translateY(0px) scale(0.9); opacity: 0.7; }
+      50% { opacity: 0.95; }
+      100% { transform: translateY(-180px) scale(1.2); opacity: 0; }
+    }
+
+    .seaweed-sway {
+      transform-origin: bottom center;
+      animation: swayPlant 3.6s ease-in-out infinite;
+    }
+
+    .seaweed-sway-alt {
+      transform-origin: bottom center;
+      animation: swayPlant 4.4s ease-in-out infinite reverse;
+    }
+
+    .bubble-rise {
+      animation: floatBubble 5.5s linear infinite;
+    }
+
+    .pond-water {
+      background: linear-gradient(180deg, #38bdf8 0%, #0284c7 45%, #0369a1 100%);
+      box-shadow: inset 0 8px 24px rgba(255, 255, 255, 0.3), 0 10px 25px rgba(2, 132, 199, 0.25);
+    }
+
+    .pond-meadow {
+      background: linear-gradient(180deg, #84cc16 0%, #65a30d 100%);
+      border: 3px solid #4d7c0f;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.14);
+    }
+
+    .stone-rim {
+      background-color: #78716c;
+      background-image:
+        radial-gradient(circle at 12px 12px, #a8a29e 7px, #57534e 8px, transparent 9px),
+        radial-gradient(circle at 30px 10px, #d6d3d1 6px, #57534e 7px, transparent 8px),
+        radial-gradient(circle at 46px 14px, #a8a29e 7px, #57534e 8px, transparent 9px);
+      background-size: 48px 24px;
+      padding: 10px;
+      border-radius: 2rem;
+      box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.35), 0 4px 10px rgba(0, 0, 0, 0.18);
+    }
+
+    .target-pond {
+      background:
+        radial-gradient(ellipse at 30% 25%, rgba(255, 255, 255, 0.45) 0%, transparent 45%),
+        radial-gradient(ellipse at 75% 70%, rgba(255, 255, 255, 0.25) 0%, transparent 40%),
+        radial-gradient(circle at 50% 45%, #7dd3fc 0%, #38bdf8 50%, #0284c7 100%);
+      border-radius: 1.5rem;
+      box-shadow: inset 0 6px 16px rgba(12, 74, 110, 0.35), inset 0 -4px 10px rgba(255, 255, 255, 0.3);
+    }
+
+    .wood-sign {
+      background: linear-gradient(180deg, #b45309 0%, #92400e 100%);
+      border: 2px solid #78350f;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    }
+  </style>
+</head>
+<body class="p-4 md:p-6 text-slate-800">
+  <div class="max-w-6xl mx-auto space-y-5">
+    <!-- Header & Skor -->
+    <header class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 bg-white/85 backdrop-blur rounded-2xl p-4 shadow-sm border border-sky-200">
+      <div>
+        <span class="inline-block px-2.5 py-0.5 rounded-full bg-sky-600 text-white text-[11px] font-bold tracking-wide uppercase mb-1">
+          Langkah 14 • Apresiasi &amp; Tombol Selesai
+        </span>
+        <h1 class="text-xl md:text-2xl font-extrabold text-sky-950">
+          Penerapan Karakter Perumusan Pancasila
+        </h1>
+        <p class="text-xs md:text-sm text-sky-800">
+          Ayo memancing ikan, baca kalimat sikapnya, lalu kelompokkan ke kolam yang tepat!
+        </p>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-2 self-start md:self-center">
+        <div class="flex items-center gap-1.5 bg-white border border-sky-300 rounded-xl px-2.5 py-1.5 shadow-sm">
+          <label for="fish-count-input" class="text-[11px] font-bold text-sky-900 whitespace-nowrap">Jumlah Ikan:</label>
+          <input id="fish-count-input" type="number" min="1" max="35" value="35" class="w-12 text-center text-sm font-extrabold text-sky-950 bg-sky-50 border border-sky-200 rounded-lg py-0.5 focus:outline-none focus:ring-2 focus:ring-sky-400" />
+          <button id="apply-count-btn" type="button" class="px-2.5 py-1 rounded-lg bg-sky-600 hover:bg-sky-500 text-white text-[11px] font-bold transition cursor-pointer">
+            Atur
+          </button>
+        </div>
+        <div class="bg-amber-100 border border-amber-300 rounded-xl px-3 py-1.5 text-center">
+          <p class="text-[10px] font-bold uppercase text-amber-800">Skor</p>
+          <p id="score-display" class="text-lg font-extrabold text-amber-900">0</p>
+        </div>
+        <div class="bg-sky-100 border border-sky-300 rounded-xl px-3 py-1.5 text-center">
+          <p class="text-[10px] font-bold uppercase text-sky-800">Sisa Ikan</p>
+          <p id="remaining-count" class="text-lg font-extrabold text-sky-950">35</p>
+        </div>
+        <button id="music-btn" type="button" class="px-3 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold shadow transition cursor-pointer">
+          🎵 Musik: Nyala
+        </button>
+        <button id="sound-btn" type="button" class="px-3 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shadow transition cursor-pointer">
+          🔊 Efek: Nyala
+        </button>
+        <button id="finish-btn" type="button" class="px-3 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold shadow transition cursor-pointer">
+          🏁 Selesai
+        </button>
+        <button id="reset-btn" type="button" class="px-3 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold shadow transition cursor-pointer">
+          Ulangi
+        </button>
+      </div>
+    </header>
+
+    <!-- Umpan Balik Singkat -->
+    <div id="feedback-box" class="hidden rounded-xl p-3 text-center font-semibold text-sm shadow-sm"></div>
+
+    <!-- Arena Kolam Utama -->
+    <section id="arena-container" class="relative rounded-3xl overflow-hidden border-4 border-sky-200 shadow-lg bg-sky-200">
+      <!-- Overlay SVG Tali Pancing Utuh dari Ujung Joran ke Pelampung -->
+      <svg id="global-line-overlay" class="absolute inset-0 w-full h-full pointer-events-none z-30">
+        <line id="cast-line-shadow" x1="0" y1="0" x2="0" y2="0" stroke="#0f172a" stroke-width="4" stroke-linecap="round" opacity="0.35" />
+        <line id="cast-line" x1="0" y1="0" x2="0" y2="0" stroke="#fef08a" stroke-width="2.5" stroke-linecap="round" />
+      </svg>
+
+      <!-- Bagian Langit & Dermaga -->
+      <div class="relative z-10 bg-gradient-to-b from-sky-200 to-sky-100 px-4 pt-3 pb-2 flex items-end justify-between border-b-4 border-sky-400/50">
+        <div class="flex items-end gap-3">
+          <svg id="angler-svg" viewBox="0 0 150 115" class="w-32 h-24 overflow-visible shrink-0">
+            <rect x="4" y="96" width="94" height="12" rx="4" fill="#92400e" stroke="#451a03" stroke-width="2" />
+            <rect x="16" y="108" width="9" height="10" fill="#78350f" />
+            <rect x="76" y="108" width="9" height="10" fill="#78350f" />
+
+            <g id="angler-body">
+              <path d="M42 84 L36 96 M56 84 L62 96" stroke="#1e293b" stroke-width="5.5" stroke-linecap="round" />
+              <rect x="37" y="52" width="24" height="33" rx="8" fill="#ef4444" stroke="#1e293b" stroke-width="2" />
+              <circle cx="49" cy="35" r="13" fill="#fed7aa" stroke="#1e293b" stroke-width="2" />
+              <path d="M35 31 Q49 18 63 31 Z" fill="#facc15" stroke="#1e293b" stroke-width="2" />
+              <rect x="33" y="29" width="34" height="4.5" rx="2" fill="#eab308" stroke="#1e293b" stroke-width="1.5" />
+              <circle cx="53" cy="35" r="2" fill="#0f172a" />
+              <path d="M56 61 L78 66" stroke="#fed7aa" stroke-width="5.5" stroke-linecap="round" />
+              <line x1="72" y1="70" x2="136" y2="18" stroke="#78350f" stroke-width="4" stroke-linecap="round" />
+              <circle id="rod-tip" cx="136" cy="18" r="3" fill="#facc15" stroke="#78350f" stroke-width="1" />
+            </g>
+          </svg>
+
+          <div class="pb-2 space-y-1">
+            <span id="angler-status" class="inline-block text-xs font-bold text-sky-950 bg-white/90 px-3 py-1 rounded-full shadow-sm">
+              Tekan "Lempar Umpan" untuk mulai memancing!
+            </span>
+          </div>
+        </div>
+
+        <div class="pb-2">
+          <button id="action-btn" type="button" class="px-5 py-3 rounded-2xl bg-amber-500 hover:bg-amber-400 active:scale-95 text-slate-950 font-extrabold text-sm md:text-base shadow-md border-2 border-amber-700 transition cursor-pointer">
+            🎣 Lempar Umpan!
+          </button>
+        </div>
+      </div>
+
+      <!-- Kolam Air Tempat 17 Ikan Berenang -->
+      <div id="pond-arena" class="pond-water relative w-full h-72 md:h-80 overflow-hidden select-none">
+        <!-- Dekorasi Dasar Laut: Pasir, Tumbuhan Laut, Karang & Gelembung (ala Feeding Frenzy) -->
+        <div class="absolute inset-0 pointer-events-none z-0">
+          <!-- Gelembung udara naik -->
+          <div class="bubble-rise absolute bottom-6 left-[14%] w-3 h-3 rounded-full bg-white/40 border border-white/70"></div>
+          <div class="bubble-rise absolute bottom-8 left-[38%] w-4 h-4 rounded-full bg-white/35 border border-white/70" style="animation-delay: 1.6s;"></div>
+          <div class="bubble-rise absolute bottom-5 left-[64%] w-2.5 h-2.5 rounded-full bg-white/45 border border-white/70" style="animation-delay: 3.1s;"></div>
+          <div class="bubble-rise absolute bottom-7 left-[85%] w-3.5 h-3.5 rounded-full bg-white/35 border border-white/70" style="animation-delay: 2.2s;"></div>
+
+          <!-- Dasar Pasir & Tumbuhan Laut SVG -->
+          <svg viewBox="0 0 1000 130" preserveAspectRatio="none" class="absolute bottom-0 left-0 w-full h-28">
+            <!-- Dasar Pasir -->
+            <path d="M0,95 Q180,75 360,92 T720,88 T1000,94 L1000,130 L0,130 Z" fill="#e7c68e" />
+            <path d="M0,108 Q250,94 500,106 T1000,102 L1000,130 L0,130 Z" fill="#d4a359" opacity="0.7" />
+
+            <!-- Batu Karang -->
+            <ellipse cx="90" cy="108" rx="34" ry="14" fill="#64748b" />
+            <ellipse cx="480" cy="106" rx="42" ry="15" fill="#475569" />
+            <ellipse cx="890" cy="108" rx="38" ry="14" fill="#64748b" />
+
+            <!-- Rumput Laut Kiri -->
+            <g class="seaweed-sway">
+              <path d="M45,105 Q30,72 48,42 Q58,20 42,6 Q62,25 56,50 Q45,75 56,105 Z" fill="#16a34a" />
+              <path d="M62,108 Q76,78 60,52 Q52,32 68,18 Q74,40 68,62 Q82,82 70,108 Z" fill="#22c55e" />
+            </g>
+
+            <!-- Terumbu Karang Pink -->
+            <g class="seaweed-sway-alt">
+              <path d="M195,102 C185,78 175,65 182,50 C188,60 194,70 198,82 C202,64 205,46 212,38 C216,52 212,68 208,82 C216,70 225,60 232,54 C230,68 220,82 210,102 Z" fill="#f43f5e" />
+            </g>
+
+            <!-- Rumput Laut Tengah -->
+            <g class="seaweed-sway-alt">
+              <path d="M350,105 Q336,70 352,38 Q362,16 346,4 Q368,22 362,48 Q350,76 360,105 Z" fill="#15803d" />
+              <path d="M368,105 Q384,74 370,48 Q364,28 378,16 Q384,38 378,60 Q390,82 378,105 Z" fill="#4ade80" />
+            </g>
+
+            <!-- Terumbu Karang Oranye -->
+            <g class="seaweed-sway">
+              <path d="M610,104 C600,82 590,68 596,52 C603,64 608,74 612,84 C615,64 620,44 628,36 C632,52 626,68 622,84 C632,72 640,62 648,56 C644,72 634,86 624,104 Z" fill="#fb923c" />
+            </g>
+
+            <!-- Rumput Laut Kanan -->
+            <g class="seaweed-sway">
+              <path d="M770,104 Q756,72 772,42 Q782,18 766,5 Q788,24 782,48 Q770,74 780,104 Z" fill="#16a34a" />
+              <path d="M790,106 Q806,76 792,50 Q784,30 800,16 Q806,40 798,62 Q812,82 800,106 Z" fill="#22c55e" />
+              <path d="M935,105 Q922,72 938,44 Q948,22 932,8 Q954,26 948,50 Q936,76 946,105 Z" fill="#15803d" />
+            </g>
+          </svg>
+        </div>
+
+        <!-- Kail Pancing (Bukan Bulat) -->
+        <div id="bobber" class="absolute z-20 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+          <div id="bobber-alert" class="hidden -mt-9 mb-1 px-2.5 py-0.5 rounded-full bg-rose-600 text-white text-xs font-extrabold shadow animate-bounce whitespace-nowrap">
+            ❗ TARIK!
+          </div>
+          <svg id="bobber-dot" width="28" height="34" viewBox="0 0 28 34" class="mx-auto drop-shadow-md overflow-visible">
+            <!-- Lubang atas kail (tempat tali terikat) -->
+            <circle cx="14" cy="4" r="3" fill="none" stroke="#e2e8f0" stroke-width="2.2" />
+            <!-- Batang & lengkungan kail logam -->
+            <path d="M14,7 L14,22 C14,29 24,29 24,22 C24,19 22,17 19.5,19 L22,16" fill="none" stroke="#f8fafc" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" />
+            <!-- Umpan cacing/pelet kecil di ujung kail -->
+            <ellipse cx="22" cy="21" rx="3.2" ry="2.2" fill="#f97316" stroke="#7c2d12" stroke-width="1" />
+          </svg>
+        </div>
+
+        <div id="fish-layer" class="absolute inset-0 z-10"></div>
+      </div>
+    </section>
+
+    <!-- 6 Kolam Pengelompokan Karakter (Sesuai PDF) -->
+    <section>
+      <h2 class="text-sm md:text-base font-extrabold text-sky-950 mb-3">
+        Kolam Pengelompokan Karakter Pancasila (6 Kolam)
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 pt-2">
+        <div class="pond-meadow relative rounded-3xl p-3 pt-5 mt-3">
+          <div class="wood-sign relative z-10 -mt-8 mb-2 mx-auto w-11/12 text-white font-extrabold py-1.5 px-3 rounded-xl text-xs md:text-sm text-center tracking-wide">
+            🪵 Jujur
+          </div>
+          <!-- Hiasan daun & bunga di tepi kolam -->
+          <span class="absolute top-6 left-2 text-base pointer-events-none select-none">🌿</span>
+          <span class="absolute top-6 right-2 text-base pointer-events-none select-none">🌸</span>
+          <span class="absolute bottom-1.5 left-2.5 text-sm pointer-events-none select-none">🌼</span>
+          <span class="absolute bottom-1.5 right-2.5 text-base pointer-events-none select-none">🌿</span>
+          <div class="stone-rim">
+            <div id="pond-Jujur" class="target-pond p-3 min-h-[135px] flex flex-col gap-2"></div>
+          </div>
+        </div>
+        <div class="pond-meadow relative rounded-3xl p-3 pt-5 mt-3">
+          <div class="wood-sign relative z-10 -mt-8 mb-2 mx-auto w-11/12 text-white font-extrabold py-1.5 px-3 rounded-xl text-xs md:text-sm text-center tracking-wide">
+            🪵 Berani
+          </div>
+          <!-- Hiasan daun & bunga di tepi kolam -->
+          <span class="absolute top-6 left-2 text-base pointer-events-none select-none">🌿</span>
+          <span class="absolute top-6 right-2 text-base pointer-events-none select-none">🌸</span>
+          <span class="absolute bottom-1.5 left-2.5 text-sm pointer-events-none select-none">🌼</span>
+          <span class="absolute bottom-1.5 right-2.5 text-base pointer-events-none select-none">🌿</span>
+          <div class="stone-rim">
+            <div id="pond-Berani" class="target-pond p-3 min-h-[135px] flex flex-col gap-2"></div>
+          </div>
+        </div>
+        <div class="pond-meadow relative rounded-3xl p-3 pt-5 mt-3">
+          <div class="wood-sign relative z-10 -mt-8 mb-2 mx-auto w-11/12 text-white font-extrabold py-1.5 px-3 rounded-xl text-xs md:text-sm text-center tracking-wide">
+            🪵 Pantang Menyerah
+          </div>
+          <!-- Hiasan daun & bunga di tepi kolam -->
+          <span class="absolute top-6 left-2 text-base pointer-events-none select-none">🌿</span>
+          <span class="absolute top-6 right-2 text-base pointer-events-none select-none">🌸</span>
+          <span class="absolute bottom-1.5 left-2.5 text-sm pointer-events-none select-none">🌼</span>
+          <span class="absolute bottom-1.5 right-2.5 text-base pointer-events-none select-none">🌿</span>
+          <div class="stone-rim">
+            <div id="pond-Pantang Menyerah" class="target-pond p-3 min-h-[135px] flex flex-col gap-2"></div>
+          </div>
+        </div>
+        <div class="pond-meadow relative rounded-3xl p-3 pt-5 mt-3">
+          <div class="wood-sign relative z-10 -mt-8 mb-2 mx-auto w-11/12 text-white font-extrabold py-1.5 px-3 rounded-xl text-xs md:text-sm text-center tracking-wide">
+            🪵 Rela Berkorban
+          </div>
+          <!-- Hiasan daun & bunga di tepi kolam -->
+          <span class="absolute top-6 left-2 text-base pointer-events-none select-none">🌿</span>
+          <span class="absolute top-6 right-2 text-base pointer-events-none select-none">🌸</span>
+          <span class="absolute bottom-1.5 left-2.5 text-sm pointer-events-none select-none">🌼</span>
+          <span class="absolute bottom-1.5 right-2.5 text-base pointer-events-none select-none">🌿</span>
+          <div class="stone-rim">
+            <div id="pond-Rela Berkorban" class="target-pond p-3 min-h-[135px] flex flex-col gap-2"></div>
+          </div>
+        </div>
+        <div class="pond-meadow relative rounded-3xl p-3 pt-5 mt-3">
+          <div class="wood-sign relative z-10 -mt-8 mb-2 mx-auto w-11/12 text-white font-extrabold py-1.5 px-3 rounded-xl text-xs md:text-sm text-center tracking-wide">
+            🪵 Mengutamakan Persatuan
+          </div>
+          <!-- Hiasan daun & bunga di tepi kolam -->
+          <span class="absolute top-6 left-2 text-base pointer-events-none select-none">🌿</span>
+          <span class="absolute top-6 right-2 text-base pointer-events-none select-none">🌸</span>
+          <span class="absolute bottom-1.5 left-2.5 text-sm pointer-events-none select-none">🌼</span>
+          <span class="absolute bottom-1.5 right-2.5 text-base pointer-events-none select-none">🌿</span>
+          <div class="stone-rim">
+            <div id="pond-Mengutamakan Persatuan" class="target-pond p-3 min-h-[135px] flex flex-col gap-2"></div>
+          </div>
+        </div>
+        <div class="pond-meadow relative rounded-3xl p-3 pt-5 mt-3">
+          <div class="wood-sign relative z-10 -mt-8 mb-2 mx-auto w-11/12 text-white font-extrabold py-1.5 px-3 rounded-xl text-xs md:text-sm text-center tracking-wide">
+            🪵 Menghargai Pendapat Orang Lain
+          </div>
+          <!-- Hiasan daun & bunga di tepi kolam -->
+          <span class="absolute top-6 left-2 text-base pointer-events-none select-none">🌿</span>
+          <span class="absolute top-6 right-2 text-base pointer-events-none select-none">🌸</span>
+          <span class="absolute bottom-1.5 left-2.5 text-sm pointer-events-none select-none">🌼</span>
+          <span class="absolute bottom-1.5 right-2.5 text-base pointer-events-none select-none">🌿</span>
+          <div class="stone-rim">
+            <div id="pond-Menghargai Pendapat Orang Lain" class="target-pond p-3 min-h-[135px] flex flex-col gap-2"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- POP-UP MODAL SAAT IKAN BERHASIL DITARIK -->
+  <div id="catch-modal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border-4 border-sky-300 space-y-4">
+      <div class="flex items-center gap-3">
+        <div id="modal-fish-icon" class="shrink-0"></div>
+        <div>
+          <span class="inline-block px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-xs font-extrabold">
+            Ikan #<span id="modal-fish-id">1</span> • <span id="modal-fish-species">Ikan</span>
+          </span>
+          <h3 class="text-lg font-extrabold text-slate-900 mt-0.5">Pilih Kolam yang Sesuai:</h3>
+        </div>
+      </div>
+
+      <div class="bg-sky-50 border-2 border-sky-200 rounded-2xl p-4 text-center">
+        <p id="modal-fish-text" class="text-base md:text-lg font-bold text-slate-800 leading-snug"></p>
+      </div>
+
+      <div id="modal-error" class="hidden rounded-xl bg-rose-100 border border-rose-300 text-rose-800 text-xs font-bold p-2.5 text-center"></div>
+
+      <div id="modal-pond-choices" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+        <button type="button" data-choice="Jujur" class="modal-choice-btn wood-sign text-white font-bold py-2.5 px-3 rounded-xl text-sm hover:brightness-110 active:scale-95 transition cursor-pointer">
+          Jujur
+        </button>
+        <button type="button" data-choice="Berani" class="modal-choice-btn wood-sign text-white font-bold py-2.5 px-3 rounded-xl text-sm hover:brightness-110 active:scale-95 transition cursor-pointer">
+          Berani
+        </button>
+        <button type="button" data-choice="Pantang Menyerah" class="modal-choice-btn wood-sign text-white font-bold py-2.5 px-3 rounded-xl text-sm hover:brightness-110 active:scale-95 transition cursor-pointer">
+          Pantang Menyerah
+        </button>
+        <button type="button" data-choice="Rela Berkorban" class="modal-choice-btn wood-sign text-white font-bold py-2.5 px-3 rounded-xl text-sm hover:brightness-110 active:scale-95 transition cursor-pointer">
+          Rela Berkorban
+        </button>
+        <button type="button" data-choice="Mengutamakan Persatuan" class="modal-choice-btn wood-sign text-white font-bold py-2.5 px-3 rounded-xl text-sm hover:brightness-110 active:scale-95 transition cursor-pointer">
+          Mengutamakan Persatuan
+        </button>
+        <button type="button" data-choice="Menghargai Pendapat Orang Lain" class="modal-choice-btn wood-sign text-white font-bold py-2.5 px-3 rounded-xl text-sm hover:brightness-110 active:scale-95 transition cursor-pointer">
+          Menghargai Pendapat Orang Lain
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAYAR RINGKASAN AKHIR & APRESIASI -->
+  <div id="win-modal" class="hidden fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border-4 border-amber-300 space-y-4 text-center">
+      <div class="text-5xl">🏆</div>
+      <div>
+        <span class="inline-block px-3 py-0.5 rounded-full bg-amber-100 text-amber-800 text-xs font-extrabold uppercase tracking-wide">
+          Misi Selesai!
+        </span>
+        <h3 id="win-title" class="text-2xl font-extrabold text-slate-900 mt-1">
+          Hebat! Semua 25 Ikan Terkumpul!
+        </h3>
+        <p class="text-sm text-slate-600 mt-1">
+          Kamu sudah berhasil mengenali dan mengelompokkan seluruh sikap karakter Perumus Pancasila.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3">
+        <div class="bg-amber-50 border-2 border-amber-200 rounded-2xl p-3">
+          <p class="text-xs font-bold uppercase text-amber-700">Total Skor</p>
+          <p id="win-score" class="text-2xl font-extrabold text-amber-900">170</p>
+        </div>
+        <div class="bg-emerald-50 border-2 border-emerald-200 rounded-2xl p-3">
+          <p class="text-xs font-bold uppercase text-emerald-700">Ketepatan</p>
+          <p id="win-accuracy" class="text-2xl font-extrabold text-emerald-900">100%</p>
+        </div>
+      </div>
+
+      <div id="win-breakdown" class="bg-sky-50 border border-sky-200 rounded-2xl p-3 text-left grid grid-cols-2 gap-2 text-xs"></div>
+
+      <div class="flex flex-col sm:flex-row gap-2.5 pt-1">
+        <button id="win-replay-btn" type="button" class="flex-1 py-3 px-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-sm shadow transition cursor-pointer">
+          🔄 Main Lagi
+        </button>
+        <button id="win-inspect-btn" type="button" class="flex-1 py-3 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-sm shadow transition cursor-pointer">
+          👀 Lihat Hasil Kolam
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 1. DATA LENGKAP 17 IKAN DUNIA NYATA SESUAI PDF
+    const initialFish = [
+      { id: 1, species: "Ikan Badut", shape: "clownfish", text: "Sinta mengerjakan ulangan tanpa menyontek.", category: "Jujur", color: "#f97316" },
+      { id: 2, species: "Ikan Mas", shape: "goldfish", text: "Andi mengakui kesalahannya kepada guru.", category: "Jujur", color: "#fb923c" },
+      { id: 3, species: "Ikan Kakap Merah", shape: "tuna", text: "Riko tetap mencoba meskipun gagal dalam lomba.", category: "Pantang Menyerah", color: "#ef4444" },
+      { id: 4, species: "Blue Tang", shape: "tang", text: "Dika berani tampil presentasi di depan kelas.", category: "Berani", color: "#2563eb" },
+      { id: 5, species: "Ikan Cupang", shape: "betta", text: "Lani membantu teman walau harus mengorbankan waktunya.", category: "Rela Berkorban", color: "#8b5cf6" },
+      { id: 6, species: "Ikan Buntal", shape: "puffer", text: "Budi tidak memaksakan kehendak saat diskusi kelompok.", category: "Menghargai Pendapat Orang Lain", color: "#eab308" },
+      { id: 7, species: "Ikan Angel", shape: "angelfish", text: "Rina menghargai pendapat teman saat musyawarah.", category: "Menghargai Pendapat Orang Lain", color: "#facc15" },
+      { id: 8, species: "Ikan Salmon", shape: "tuna", text: "Tono tetap berlatih meskipun sering kalah.", category: "Pantang Menyerah", color: "#fb7185" },
+      { id: 9, species: "Ikan Koi", shape: "koi", text: "Sari berkata apa adanya kepada orang tuanya.", category: "Jujur", color: "#ffffff" },
+      { id: 10, species: "Ikan Tuna", shape: "tuna", text: "Doni membela teman yang diperlakukan tidak adil.", category: "Berani", color: "#0284c7" },
+      { id: 11, species: "Ikan Kupu-Kupu", shape: "angelfish", text: "Wati mau berbagi bekal dengan temannya.", category: "Rela Berkorban", color: "#38bdf8" },
+      { id: 12, species: "Ikan Nila", shape: "goldfish", text: "Edo menerima keputusan bersama dengan lapang dada.", category: "Mengutamakan Persatuan", color: "#64748b" },
+      { id: 13, species: "Ikan Kerapu", shape: "puffer", text: "Lina berusaha terus memahami pelajaran sulit.", category: "Pantang Menyerah", color: "#84cc16" },
+      { id: 14, species: "Ikan Badut Pink", shape: "clownfish", text: "Bayu tidak takut mencoba hal baru.", category: "Berani", color: "#ec4899" },
+      { id: 15, species: "Ikan Yellow Tang", shape: "tang", text: "Nia ikut kerja bakti demi kepentingan bersama.", category: "Mengutamakan Persatuan", color: "#fde047" },
+      { id: 16, species: "Ikan Cupang Biru", shape: "betta", text: "Siska mendengarkan pendapat temannya saat diskusi tanpa menyela.", category: "Menghargai Pendapat Orang Lain", color: "#0ea5e9" },
+      { id: 17, species: "Ikan Koi Kohaku", shape: "koi", text: "Arif menerima saran dari teman meskipun berbeda dengan pendapatnya.", category: "Menghargai Pendapat Orang Lain", color: "#f8fafc" },
+      { id: 18, species: "Ikan Gurame", shape: "goldfish", text: "Bima mengembalikan uang kembalian belanja kepada ibu.", category: "Jujur", color: "#f59e0b" },
+      { id: 19, species: "Ikan Layang", shape: "angelfish", text: "Tari berani bertanya kepada guru saat belum paham.", category: "Berani", color: "#a855f7" },
+      { id: 20, species: "Ikan Bandeng", shape: "tuna", text: "Dimas mengulang latihan soal matematika sampai bisa.", category: "Pantang Menyerah", color: "#94a3b8" },
+      { id: 21, species: "Ikan Arwana", shape: "koi", text: "Fajar menyisihkan uang jajannya untuk membantu korban bencana.", category: "Rela Berkorban", color: "#f43f5e" },
+      { id: 22, species: "Ikan Koki", shape: "puffer", text: "Salsa meminjamkan alat tulis kepada teman yang lupa membawa.", category: "Rela Berkorban", color: "#fb923c" },
+      { id: 23, species: "Ikan Tongkol", shape: "tuna", text: "Bagas bermain bersama semua teman tanpa membeda-bedakan.", category: "Mengutamakan Persatuan", color: "#14b8a6" },
+      { id: 24, species: "Ikan Discus", shape: "tang", text: "Putri ikut menenangkan teman yang sedang berselisih.", category: "Mengutamakan Persatuan", color: "#ec4899" },
+      { id: 25, species: "Ikan Cupang Merah", shape: "betta", text: "Hendra mencatat usulan teman-temannya saat rapat kelas.", category: "Menghargai Pendapat Orang Lain", color: "#dc2626" },
+      { id: 26, species: "Ikan Mujair", shape: "goldfish", text: "Rudi mengembalikan pensil teman yang dipinjamnya.", category: "Jujur", color: "#65a30d" },
+      { id: 27, species: "Ikan Kakap Hitam", shape: "tuna", text: "Sari mengakui belum mengerjakan PR dengan terus terang.", category: "Jujur", color: "#475569" },
+      { id: 28, species: "Ikan Barakuda", shape: "tuna", text: "Gilang berani memimpin doa di depan kelas.", category: "Berani", color: "#0ea5e9" },
+      { id: 29, species: "Ikan Napoleon", shape: "tang", text: "Nadia berani menegur teman yang membuang sampah sembarangan.", category: "Berani", color: "#10b981" },
+      { id: 30, species: "Ikan Patin", shape: "koi", text: "Tegar tetap semangat belajar meski nilainya sempat turun.", category: "Pantang Menyerah", color: "#e2e8f0" },
+      { id: 31, species: "Ikan Sepat", shape: "angelfish", text: "Vina terus berlatih membaca puisi sebelum pentas seni.", category: "Pantang Menyerah", color: "#818cf8" },
+      { id: 32, species: "Ikan Belanak", shape: "goldfish", text: "Farhan merelakan waktu bermainnya untuk merawat adiknya.", category: "Rela Berkorban", color: "#38bdf8" },
+      { id: 33, species: "Ikan Komet", shape: "betta", text: "Maya membantu membersihkan kelas meski bukan jadwal piketnya.", category: "Rela Berkorban", color: "#f97316" },
+      { id: 34, species: "Ikan Kakap Putih", shape: "tuna", text: "Rama mengajak teman-teman bergotong royong merapikan perpustakaan.", category: "Mengutamakan Persatuan", color: "#cbd5e1" },
+      { id: 35, species: "Ikan Mandarin", shape: "clownfish", text: "Dina menghormati usulan ketua kelompok saat kerja sama.", category: "Menghargai Pendapat Orang Lain", color: "#06b6d4" }
+    ];
+
+    const pondNames = [
+      "Jujur",
+      "Berani",
+      "Pantang Menyerah",
+      "Rela Berkorban",
+      "Mengutamakan Persatuan",
+      "Menghargai Pendapat Orang Lain"
+    ];
+
+    // 2. AUDIO ENGINE: EFEK SUARA + MUSIK LATAR CERIA (WEB AUDIO API)
+    let audioCtx = null;
+    let soundEnabled = true;
+    let musicEnabled = true;
+    let musicInterval = null;
+    let musicStep = 0;
+
+    // Melodi arcade cepat, seru & menantang (ala Feeding Frenzy / game petualangan)
+    const melodyNotes = [
+      659.25, 659.25, 783.99, 880.00,
+      783.99, 659.25, 587.33, 659.25,
+      783.99, 880.00, 987.77, 880.00,
+      783.99, 659.25, 587.33, 523.25,
+      587.33, 659.25, 783.99, 659.25,
+      880.00, 987.77, 1046.50, 987.77,
+      880.00, 783.99, 659.25, 587.33,
+      659.25, 783.99, 659.25, 0
+    ];
+    const bassNotes = [
+      164.81, 164.81, 196.00, 220.00,
+      196.00, 164.81, 146.83, 164.81,
+      196.00, 220.00, 246.94, 220.00,
+      196.00, 164.81, 146.83, 130.81,
+      146.83, 146.83, 196.00, 196.00,
+      220.00, 220.00, 261.63, 246.94,
+      220.00, 196.00, 164.81, 146.83,
+      130.81, 196.00, 130.81, 0
+    ];
+
+    function getAudioContext() {
+      if (!audioCtx) {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (AudioContextClass) audioCtx = new AudioContextClass();
+      }
+      if (audioCtx && audioCtx.state === "suspended") {
+        audioCtx.resume();
+      }
+      return audioCtx;
+    }
+
+    function playNote(freq, duration, type = "sine", volume = 0.1, delay = 0) {
+      const ctx = getAudioContext();
+      if (!ctx || freq <= 0) return;
+      const now = ctx.currentTime + delay;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, now);
+      gain.gain.setValueAtTime(volume, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(now);
+      osc.stop(now + duration);
+    }
+
+    function startBackgroundMusic() {
+      if (!musicEnabled || musicInterval) return;
+      getAudioContext();
+      musicInterval = setInterval(() => {
+        if (!musicEnabled || !audioCtx || audioCtx.state !== "running") return;
+        const idx = musicStep % melodyNotes.length;
+        const mel = melodyNotes[idx];
+        const bass = bassNotes[idx];
+        if (mel > 0) playNote(mel, 0.14, "square", 0.032);
+        if (bass > 0) playNote(bass, 0.16, "triangle", 0.055);
+        musicStep++;
+      }, 175); // Tempo cepat & menantang
+    }
+
+    function stopBackgroundMusic() {
+      if (musicInterval) {
+        clearInterval(musicInterval);
+        musicInterval = null;
+      }
+    }
+
+    function ensureMusicRunning() {
+      if (musicEnabled) startBackgroundMusic();
+    }
+
+    function playCastSound() {
+      if (!soundEnabled) return;
+      const ctx = getAudioContext();
+      if (!ctx) return;
+      const now = ctx.currentTime;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(520, now);
+      osc.frequency.exponentialRampToValueAtTime(190, now + 0.18);
+      gain.gain.setValueAtTime(0.14, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.2);
+      playNote(340, 0.1, "triangle", 0.12, 0.16);
+    }
+
+    function playBiteSound() {
+      if (!soundEnabled) return;
+      playNote(880, 0.1, "triangle", 0.18, 0);
+      playNote(1175, 0.14, "triangle", 0.18, 0.11);
+    }
+
+    function playReelSound() {
+      if (!soundEnabled) return;
+      playNote(440, 0.08, "sine", 0.14, 0);
+      playNote(587, 0.08, "sine", 0.14, 0.07);
+      playNote(784, 0.15, "sine", 0.16, 0.14);
+    }
+
+    function playCorrectSound() {
+      if (!soundEnabled) return;
+      playNote(523.25, 0.12, "triangle", 0.16, 0);
+      playNote(659.25, 0.12, "triangle", 0.16, 0.1);
+      playNote(783.99, 0.22, "triangle", 0.18, 0.2);
+    }
+
+    function playWrongSound() {
+      if (!soundEnabled) return;
+      playNote(220, 0.14, "sawtooth", 0.08, 0);
+      playNote(185, 0.2, "sawtooth", 0.08, 0.13);
+    }
+
+    function playWinSound() {
+      if (!soundEnabled) return;
+      const notes = [523.25, 659.25, 783.99, 1046.5];
+      notes.forEach((n, i) => playNote(n, 0.22, "triangle", 0.18, i * 0.12));
+    }
+
+    // 3. STATE PERMAINAN
+    let swimmingFish = [];
+    let groupedFish = {};
+    let activeFishCount = 35;
+    let score = 0;
+    let totalAttempts = 0;
+    let correctAttempts = 0;
+    let gamePhase = "idle"; // idle | waiting | biting | modal
+    let bobberPos = { x: 18, y: 20 };
+    let bitingFish = null;
+    let animFrameId = null;
+    let biteTimer = null;
+
+    // Elemen DOM
+    const arenaContainerEl = document.getElementById("arena-container");
+    const rodTipEl = document.getElementById("rod-tip");
+    const castLineEl = document.getElementById("cast-line");
+    const castLineShadowEl = document.getElementById("cast-line-shadow");
+    const fishLayerEl = document.getElementById("fish-layer");
+    const bobberEl = document.getElementById("bobber");
+    const bobberDotEl = document.getElementById("bobber-dot");
+    const bobberAlertEl = document.getElementById("bobber-alert");
+    const anglerBodyEl = document.getElementById("angler-body");
+    const anglerStatusEl = document.getElementById("angler-status");
+    const actionBtn = document.getElementById("action-btn");
+    const musicBtn = document.getElementById("music-btn");
+    const soundBtn = document.getElementById("sound-btn");
+    const scoreDisplayEl = document.getElementById("score-display");
+    const remainingCountEl = document.getElementById("remaining-count");
+    const feedbackBoxEl = document.getElementById("feedback-box");
+    const resetBtn = document.getElementById("reset-btn");
+    const fishCountInputEl = document.getElementById("fish-count-input");
+    const applyCountBtn = document.getElementById("apply-count-btn");
+
+    // Elemen Pop-up Modal
+    const catchModalEl = document.getElementById("catch-modal");
+    const modalFishIconEl = document.getElementById("modal-fish-icon");
+    const modalFishIdEl = document.getElementById("modal-fish-id");
+    const modalFishTextEl = document.getElementById("modal-fish-text");
+    const modalErrorEl = document.getElementById("modal-error");
+
+    function createFishSvg(fish, width = 82, height = 48) {
+      let bodySvg = "";
+
+      if (fish.shape === "clownfish") {
+        // Ikan Badut dengan garis putih khas
+        bodySvg = `
+          <path d="M88,35 L114,17 Q110,35 114,53 Z" fill="${fish.color}" stroke="#0f172a" stroke-width="2"/>
+          <path d="M38,16 Q56,4 74,17 Z" fill="${fish.color}" stroke="#0f172a" stroke-width="2"/>
+          <ellipse cx="52" cy="35" rx="40" ry="21" fill="${fish.color}" stroke="#0f172a" stroke-width="2"/>
+          <path d="M36,16 Q42,35 36,54 L45,55 Q50,35 45,15 Z" fill="#ffffff" stroke="#0f172a" stroke-width="1.5"/>
+          <path d="M64,15 Q70,35 64,55 L72,53 Q77,35 72,17 Z" fill="#ffffff" stroke="#0f172a" stroke-width="1.5"/>
+        `;
+      } else if (fish.shape === "tang") {
+        // Blue Tang / Yellow Tang bertubuh pipih dengan ekor kuning/kontras
+        const tailColor = fish.color === "#2563eb" ? "#facc15" : "#f97316";
+        bodySvg = `
+          <path d="M86,35 L115,15 L108,35 L115,55 Z" fill="${tailColor}" stroke="#0f172a" stroke-width="2"/>
+          <path d="M24,25 Q54,2 84,22 L76,48 Q48,66 20,44 Z" fill="${fish.color}" stroke="#0f172a" stroke-width="2"/>
+          <path d="M35,28 Q58,20 75,30" fill="none" stroke="#0f172a" stroke-width="3" stroke-linecap="round" opacity="0.65"/>
+        `;
+      } else if (fish.shape === "betta") {
+        // Ikan Cupang dengan sirip lebar menjuntai
+        bodySvg = `
+          <path d="M78,35 Q118,5 114,35 Q118,65 78,35 Z" fill="${fish.color}" opacity="0.85" stroke="#0f172a" stroke-width="2"/>
+          <path d="M40,18 Q58,2 78,16 L68,26 Z" fill="${fish.color}" opacity="0.85" stroke="#0f172a" stroke-width="1.8"/>
+          <path d="M42,50 Q58,68 76,52 L64,44 Z" fill="${fish.color}" opacity="0.85" stroke="#0f172a" stroke-width="1.8"/>
+          <ellipse cx="50" cy="35" rx="34" ry="16" fill="${fish.color}" stroke="#0f172a" stroke-width="2"/>
+        `;
+      } else if (fish.shape === "puffer") {
+        // Ikan Buntal / Kerapu bulat berduri halus
+        bodySvg = `
+          <polygon points="88,35 112,20 112,50" fill="${fish.color}" stroke="#0f172a" stroke-width="2"/>
+          <circle cx="52" cy="35" r="26" fill="${fish.color}" stroke="#0f172a" stroke-width="2"/>
+          <circle cx="46" cy="24" r="3" fill="#78350f" opacity="0.45"/>
+          <circle cx="62" cy="22" r="2.5" fill="#78350f" opacity="0.45"/>
+          <circle cx="65" cy="44" r="3.5" fill="#78350f" opacity="0.45"/>
+          <path d="M30,45 Q52,58 72,45" fill="#fef9c3" opacity="0.75"/>
+        `;
+      } else if (fish.shape === "angelfish") {
+        // Ikan Angel segitiga tinggi elegan
+        bodySvg = `
+          <polygon points="84,35 112,18 106,35 112,52" fill="${fish.color}" stroke="#0f172a" stroke-width="2"/>
+          <path d="M16,35 L58,6 L86,35 L58,64 Z" fill="${fish.color}" stroke="#0f172a" stroke-width="2"/>
+          <line x1="46" y1="14" x2="46" y2="56" stroke="#0f172a" stroke-width="3" opacity="0.5"/>
+          <line x1="64" y1="16" x2="64" y2="54" stroke="#0f172a" stroke-width="3" opacity="0.5"/>
+        `;
+      } else if (fish.shape === "koi") {
+        // Ikan Koi putih bercorak merah-hitam
+        bodySvg = `
+          <path d="M88,35 L116,14 Q108,35 116,56 Z" fill="#f8fafc" stroke="#0f172a" stroke-width="2"/>
+          <path d="M40,15 Q56,4 72,18 Z" fill="#ef4444" stroke="#0f172a" stroke-width="1.8"/>
+          <ellipse cx="52" cy="35" rx="40" ry="20" fill="${fish.color}" stroke="#0f172a" stroke-width="2"/>
+          <ellipse cx="44" cy="27" rx="13" ry="8" fill="#ef4444"/>
+          <circle cx="68" cy="38" r="7" fill="#0f172a" opacity="0.8"/>
+        `;
+      } else if (fish.shape === "tuna") {
+        // Ikan Tuna / Salmon ramping & cepat
+        bodySvg = `
+          <polygon points="90,35 118,12 106,35 118,58" fill="${fish.color}" stroke="#0f172a" stroke-width="2"/>
+          <polygon points="48,16 62,4 68,18" fill="${fish.color}" stroke="#0f172a" stroke-width="1.8"/>
+          <path d="M12,35 Q50,10 92,35 Q50,60 12,35 Z" fill="${fish.color}" stroke="#0f172a" stroke-width="2"/>
+          <path d="M22,38 Q52,48 84,38" fill="#e2e8f0" opacity="0.55"/>
+        `;
+      } else {
+        // Ikan Mas / Nila dengan ekor kipas ganda
+        bodySvg = `
+          <path d="M84,35 Q116,10 112,32 Q118,38 110,58 Z" fill="${fish.color}" stroke="#0f172a" stroke-width="2"/>
+          <path d="M38,17 Q54,4 72,18 Z" fill="${fish.color}" stroke="#0f172a" stroke-width="1.8"/>
+          <ellipse cx="50" cy="35" rx="38" ry="21" fill="${fish.color}" stroke="#0f172a" stroke-width="2"/>
+        `;
+      }
+
+      return `
+        <svg width="${width}" height="${height}" viewBox="0 0 124 70" class="drop-shadow">
+          ${bodySvg}
+          <!-- Mata & Mulut -->
+          <circle cx="25" cy="29" r="4.5" fill="#ffffff" stroke="#0f172a" stroke-width="1.5"/>
+          <circle cx="24" cy="29" r="2.2" fill="#0f172a"/>
+          <!-- Badge Nomor Ikan -->
+          <rect x="40" y="25" width="28" height="18" rx="9" fill="#ffffff" fill-opacity="0.9" stroke="#0f172a" stroke-width="1.5"/>
+          <text x="54" y="38" text-anchor="middle" font-size="12" font-weight="800" fill="#0f172a">#${fish.id}</text>
+        </svg>
+      `;
+    }
+
+    function syncFishingLine() {
+      const arenaRect = arenaContainerEl.getBoundingClientRect();
+      const tipRect = rodTipEl.getBoundingClientRect();
+      const bobberRect = bobberDotEl.getBoundingClientRect();
+
+      if (arenaRect.width === 0) return;
+
+      const x1 = tipRect.left + tipRect.width / 2 - arenaRect.left;
+      const y1 = tipRect.top + tipRect.height / 2 - arenaRect.top;
+      const x2 = bobberRect.left + bobberRect.width / 2 - arenaRect.left;
+      const y2 = bobberRect.top + 4 - arenaRect.top;
+
+      castLineEl.setAttribute("x1", x1.toFixed(1));
+      castLineEl.setAttribute("y1", y1.toFixed(1));
+      castLineEl.setAttribute("x2", x2.toFixed(1));
+      castLineEl.setAttribute("y2", y2.toFixed(1));
+
+      castLineShadowEl.setAttribute("x1", x1.toFixed(1));
+      castLineShadowEl.setAttribute("y1", y1.toFixed(1));
+      castLineShadowEl.setAttribute("x2", x2.toFixed(1));
+      castLineShadowEl.setAttribute("y2", y2.toFixed(1));
+    }
+
+    // 4. MULAI / RESET PERMAINAN
+    function initGame() {
+      if (animFrameId) cancelAnimationFrame(animFrameId);
+      if (biteTimer) clearTimeout(biteTimer);
+
+      score = 0;
+      totalAttempts = 0;
+      correctAttempts = 0;
+      gamePhase = "idle";
+      document.getElementById("win-modal").classList.add("hidden");
+      bobberPos = { x: 18, y: 20 };
+      bitingFish = null;
+      groupedFish = {};
+      pondNames.forEach(name => { groupedFish[name] = []; });
+
+      const parsed = parseInt(fishCountInputEl.value, 10);
+      activeFishCount = Number.isNaN(parsed) ? 35 : Math.min(initialFish.length, Math.max(1, parsed));
+      fishCountInputEl.value = activeFishCount;
+
+      const shuffled = [...initialFish].sort(() => Math.random() - 0.5).slice(0, activeFishCount);
+      swimmingFish = shuffled.map((f, idx) => {
+        const dir = idx % 2 === 0 ? 1 : -1;
+        return {
+          ...f,
+          x: 10 + Math.random() * 80,
+          y: 16 + (idx % 5) * 15 + Math.random() * 6,
+          vx: dir * (0.14 + Math.random() * 0.16),
+          vy: (Math.random() - 0.5) * 0.05,
+          el: null
+        };
+      });
+
+      buildFishElements();
+      hideFeedback();
+      closeModal();
+      updateUI();
+      animFrameId = requestAnimationFrame(swimLoop);
+    }
+
+    function buildFishElements() {
+      fishLayerEl.innerHTML = "";
+      swimmingFish.forEach(fish => {
+        const div = document.createElement("div");
+        div.className = "absolute -translate-x-1/2 -translate-y-1/2 transition-transform duration-75 pointer-events-none";
+        div.innerHTML = createFishSvg(fish);
+        fish.el = div;
+        fishLayerEl.appendChild(div);
+      });
+    }
+
+    // 5. ANIMASI BERENANG SEPERTI FEEDING FRENZY
+    function swimLoop() {
+      swimmingFish.forEach(fish => {
+        if (gamePhase === "biting" && bitingFish && bitingFish.id === fish.id) {
+          fish.x += (bobberPos.x - fish.x) * 0.15;
+          fish.y += (bobberPos.y + 4 - fish.y) * 0.15;
+        } else {
+          fish.x += fish.vx;
+          fish.y += fish.vy;
+
+          if (fish.x < 7) { fish.x = 7; fish.vx = Math.abs(fish.vx); }
+          if (fish.x > 93) { fish.x = 93; fish.vx = -Math.abs(fish.vx); }
+          if (fish.y < 14) { fish.y = 14; fish.vy = Math.abs(fish.vy); }
+          if (fish.y > 86) { fish.y = 86; fish.vy = -Math.abs(fish.vy); }
+        }
+
+        if (fish.el) {
+          fish.el.style.left = `${fish.x}%`;
+          fish.el.style.top = `${fish.y}%`;
+          const flip = fish.vx > 0 ? -1 : 1;
+          fish.el.style.transform = `translate(-50%, -50%) scaleX(${flip})`;
+        }
+      });
+
+      if (gamePhase === "waiting" && swimmingFish.length > 0) {
+        const hit = swimmingFish.find(f => Math.hypot(f.x - bobberPos.x, f.y - bobberPos.y) < 10);
+        if (hit) {
+          triggerBite(hit);
+        }
+      }
+
+      syncFishingLine();
+      animFrameId = requestAnimationFrame(swimLoop);
+    }
+
+    // 6. AKSI LEMPAR UMPAN & TARIK
+    function handleActionClick() {
+      ensureMusicRunning();
+      if (swimmingFish.length === 0) return;
+
+      if (gamePhase === "idle") {
+        bobberPos = {
+          x: 32 + Math.random() * 48,
+          y: 35 + Math.random() * 42
+        };
+        gamePhase = "waiting";
+        anglerBodyEl.classList.remove("rod-pull", "rod-cast");
+        void anglerBodyEl.offsetWidth;
+        anglerBodyEl.classList.add("rod-cast");
+        playCastSound();
+        hideFeedback();
+        updateUI();
+
+        if (biteTimer) clearTimeout(biteTimer);
+        biteTimer = setTimeout(() => {
+          if (gamePhase === "waiting" && swimmingFish.length > 0) {
+            const randomFish = swimmingFish[Math.floor(Math.random() * swimmingFish.length)];
+            triggerBite(randomFish);
+          }
+        }, 2000);
+
+      } else if (gamePhase === "waiting") {
+        if (biteTimer) clearTimeout(biteTimer);
+        gamePhase = "idle";
+        bobberPos = { x: 18, y: 20 };
+        anglerBodyEl.classList.remove("rod-cast");
+        playWrongSound();
+        showFeedback("Belum ada ikan yang menggigit! Lempar umpan lagi dan tunggu tanda 'TARIK!'.", false);
+        updateUI();
+
+      } else if (gamePhase === "biting" && bitingFish) {
+        if (biteTimer) clearTimeout(biteTimer);
+        anglerBodyEl.classList.remove("rod-cast");
+        anglerBodyEl.classList.add("rod-pull");
+        playReelSound();
+        gamePhase = "modal";
+        updateUI();
+        openCatchModal(bitingFish);
+      }
+    }
+
+    function triggerBite(fish) {
+      if (gamePhase !== "waiting") return;
+      if (biteTimer) clearTimeout(biteTimer);
+      bitingFish = fish;
+      gamePhase = "biting";
+      playBiteSound();
+      updateUI();
+    }
+
+    // 7. POP-UP MODAL KALIMAT & PILIH KOLAM
+    function openCatchModal(fish) {
+      modalFishIconEl.innerHTML = createFishSvg(fish, 84, 50);
+      modalFishIdEl.textContent = fish.id;
+      document.getElementById("modal-fish-species").textContent = fish.species;
+      modalFishTextEl.textContent = `"${fish.text}"`;
+      modalErrorEl.classList.add("hidden");
+      catchModalEl.classList.remove("hidden");
+    }
+
+    function closeModal() {
+      catchModalEl.classList.add("hidden");
+    }
+
+    function handleModalChoice(chosenPond) {
+      if (!bitingFish) return;
+      totalAttempts++;
+
+      if (bitingFish.category === chosenPond) {
+        correctAttempts++;
+        groupedFish[chosenPond].push(bitingFish);
+        if (bitingFish.el) bitingFish.el.remove();
+        swimmingFish = swimmingFish.filter(f => f.id !== bitingFish.id);
+        score += 10;
+
+        const praises = ["Hebat! 🌟", "Keren sekali! 🎉", "Luar biasa! 👏", "Mantap! ✨", "Pintar! 👍"];
+        const praise = praises[Math.floor(Math.random() * praises.length)];
+        showFeedback(`${praise} Ikan #${bitingFish.id} (${bitingFish.species}) masuk ke kolam "${chosenPond}" (+10 poin)!`, true);
+        bitingFish = null;
+        closeModal();
+        gamePhase = "idle";
+        bobberPos = { x: 18, y: 20 };
+        anglerBodyEl.classList.remove("rod-pull", "rod-cast");
+
+        if (swimmingFish.length === 0) {
+          playWinSound();
+          showFeedback(`Selamat! Semua ${activeFishCount} ikan berhasil dipancing dan dikelompokkan! Skor akhir: ${score}.`, true);
+          setTimeout(openWinModal, 450);
+        } else {
+          playCorrectSound();
+        }
+        updateUI();
+      } else {
+        playWrongSound();
+        modalErrorEl.textContent = `Kurang tepat untuk kolam "${chosenPond}". Coba baca lagi kalimatnya dan pilih kolam lain!`;
+        modalErrorEl.classList.remove("hidden");
+      }
+    }
+
+    function toggleMusic() {
+      musicEnabled = !musicEnabled;
+      musicBtn.textContent = musicEnabled ? "🎵 Musik: Nyala" : "🎵 Musik: Mati";
+      musicBtn.className = musicEnabled
+        ? "px-3 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold shadow transition cursor-pointer"
+        : "px-3 py-2.5 rounded-xl bg-slate-400 hover:bg-slate-500 text-white text-xs font-bold shadow transition cursor-pointer";
+      if (musicEnabled) {
+        startBackgroundMusic();
+      } else {
+        stopBackgroundMusic();
+      }
+    }
+
+    function toggleSound() {
+      soundEnabled = !soundEnabled;
+      soundBtn.textContent = soundEnabled ? "🔊 Efek: Nyala" : "🔇 Efek: Mati";
+      soundBtn.className = soundEnabled
+        ? "px-3 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shadow transition cursor-pointer"
+        : "px-3 py-2.5 rounded-xl bg-slate-400 hover:bg-slate-500 text-white text-xs font-bold shadow transition cursor-pointer";
+      if (soundEnabled) playNote(660, 0.08, "sine", 0.12);
+    }
+
+    function showFeedback(message, isSuccess) {
+      feedbackBoxEl.textContent = message;
+      feedbackBoxEl.className = isSuccess
+        ? "rounded-xl p-3 text-center font-semibold text-sm shadow-sm bg-emerald-100 text-emerald-800 border border-emerald-300"
+        : "rounded-xl p-3 text-center font-semibold text-sm shadow-sm bg-rose-100 text-rose-800 border border-rose-300";
+    }
+
+    function hideFeedback() {
+      feedbackBoxEl.className = "hidden";
+    }
+
+    // 8. UPDATE TAMPILAN UI & 6 KOLAM
+    function updateUI() {
+      scoreDisplayEl.textContent = score;
+      remainingCountEl.textContent = swimmingFish.length;
+
+      bobberEl.style.left = `${bobberPos.x}%`;
+      bobberEl.style.top = `${bobberPos.y}%`;
+
+      if (gamePhase === "biting") {
+        bobberAlertEl.classList.remove("hidden");
+        bobberDotEl.classList.add("bobber-bite");
+      } else {
+        bobberAlertEl.classList.add("hidden");
+        bobberDotEl.classList.remove("bobber-bite");
+      }
+
+      if (swimmingFish.length === 0) {
+        actionBtn.textContent = "🎉 Selesai!";
+        actionBtn.disabled = true;
+        actionBtn.className = "px-5 py-3 rounded-2xl bg-emerald-500 text-white font-extrabold text-sm md:text-base shadow-md opacity-90 cursor-default";
+        anglerStatusEl.textContent = "Semua ${activeFishCount} ikan sudah tertangkap!";
+      } else if (gamePhase === "idle") {
+        actionBtn.disabled = false;
+        actionBtn.textContent = "🎣 Lempar Umpan!";
+        actionBtn.className = "px-5 py-3 rounded-2xl bg-amber-500 hover:bg-amber-400 active:scale-95 text-slate-950 font-extrabold text-sm md:text-base shadow-md border-2 border-amber-700 transition cursor-pointer";
+        anglerStatusEl.textContent = "Siap melempar umpan ke kolam!";
+      } else if (gamePhase === "waiting") {
+        actionBtn.disabled = false;
+        actionBtn.textContent = "⏳ Menunggu Ikan...";
+        actionBtn.className = "px-5 py-3 rounded-2xl bg-sky-600 hover:bg-sky-500 text-white font-extrabold text-sm md:text-base shadow-md border-2 border-sky-800 transition cursor-pointer";
+        anglerStatusEl.textContent = "Umpan di air... tunggu ikan menyambar!";
+      } else if (gamePhase === "biting") {
+        actionBtn.disabled = false;
+        actionBtn.textContent = "💪 TARIK SEKARANG!";
+        actionBtn.className = "px-5 py-3 rounded-2xl bg-rose-600 hover:bg-rose-500 active:scale-95 text-white font-extrabold text-sm md:text-base shadow-lg border-2 border-rose-900 animate-pulse cursor-pointer";
+        anglerStatusEl.textContent = `Ikan #${bitingFish.id} menyambar umpan! Tarik!`;
+      }
+
+      pondNames.forEach(name => {
+        const container = document.getElementById(`pond-${name}`);
+        const list = groupedFish[name];
+        container.innerHTML = "";
+
+        if (list.length === 0) {
+          container.innerHTML = `<p class="text-xs text-white/90 font-semibold text-center my-auto">Belum ada ikan</p>`;
+        } else {
+          list.forEach(fish => {
+            const card = document.createElement("div");
+            card.className = "bg-white/95 rounded-xl p-2 shadow-sm border border-sky-200 text-xs text-slate-800 flex items-center gap-2";
+            card.innerHTML = `
+              <div class="shrink-0">${createFishSvg(fish, 44, 26)}</div>
+              <span class="font-medium leading-snug">${fish.text}</span>
+            `;
+            container.appendChild(card);
+          });
+        }
+      });
+
+      syncFishingLine();
+    }
+
+    function finishGameEarly() {
+      if (biteTimer) clearTimeout(biteTimer);
+      closeModal();
+      gamePhase = "idle";
+      bobberPos = { x: 18, y: 20 };
+      anglerBodyEl.classList.remove("rod-pull", "rod-cast");
+      playWinSound();
+      updateUI();
+      openWinModal();
+    }
+
+    function openWinModal() {
+      const caughtCount = Object.values(groupedFish).reduce((sum, list) => sum + list.length, 0);
+      const accuracy = totalAttempts > 0 ? Math.round((correctAttempts / totalAttempts) * 100) : 0;
+      document.getElementById("win-title").textContent =
+        caughtCount === activeFishCount
+          ? `Hebat! Semua ${activeFishCount} Ikan Terkumpul!`
+          : `Selesai! ${caughtCount} dari ${activeFishCount} Ikan Terkumpul!`;
+      document.getElementById("win-score").textContent = score;
+      document.getElementById("win-accuracy").textContent = `${accuracy}%`;
+
+      const breakdownEl = document.getElementById("win-breakdown");
+      breakdownEl.innerHTML = "";
+      pondNames.forEach(name => {
+        const item = document.createElement("div");
+        item.className = "flex items-center justify-between bg-white rounded-lg px-2.5 py-1.5 border border-sky-100";
+        item.innerHTML = `<span class="font-semibold text-slate-700 truncate mr-2">${name}</span><span class="font-extrabold text-sky-700 shrink-0">${groupedFish[name].length} ikan</span>`;
+        breakdownEl.appendChild(item);
+      });
+
+      document.getElementById("win-modal").classList.remove("hidden");
+    }
+
+    // Event Listeners
+    document.getElementById("win-replay-btn").addEventListener("click", initGame);
+    document.getElementById("win-inspect-btn").addEventListener("click", () => {
+      document.getElementById("win-modal").classList.add("hidden");
+    });
+    actionBtn.addEventListener("click", handleActionClick);
+    document.getElementById("finish-btn").addEventListener("click", finishGameEarly);
+    resetBtn.addEventListener("click", initGame);
+    applyCountBtn.addEventListener("click", initGame);
+    fishCountInputEl.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") initGame();
+    });
+    musicBtn.addEventListener("click", toggleMusic);
+    soundBtn.addEventListener("click", toggleSound);
+    window.addEventListener("resize", syncFishingLine);
+    document.querySelectorAll(".modal-choice-btn").forEach(btn => {
+      btn.addEventListener("click", () => handleModalChoice(btn.dataset.choice));
+    });
+
+    // Mulai permainan
+    initGame();
+  </script>
+</body>
+</html>
